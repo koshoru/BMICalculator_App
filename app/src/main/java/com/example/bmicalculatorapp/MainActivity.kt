@@ -1,8 +1,10 @@
 package com.example.bmicalculatorapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,10 +22,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.example.bmicalculatorapp.ui.theme.BMICalculatorAppTheme
 
 class MainActivity : ComponentActivity() {
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("test", viewModel.text)
         super.onCreate(savedInstanceState)
         setContent {
             BMICalculatorAppTheme {
@@ -50,7 +55,7 @@ fun BMICalculatorApp() {
 
         //Title
         Text(
-            text = "BMI Calculator App",
+            text = "BMI Calculator",
             textAlign = TextAlign.Center,
             fontSize = 35.sp,
             fontWeight = FontWeight.ExtraBold,
@@ -68,7 +73,7 @@ fun BMICalculatorApp() {
         //Calculate Button
         Button(
             onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFEE7676)),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFEE6767)),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 10.dp)
