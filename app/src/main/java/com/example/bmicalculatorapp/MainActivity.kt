@@ -1,6 +1,7 @@
 package com.example.bmicalculatorapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -21,10 +22,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.example.bmicalculatorapp.ui.theme.BMICalculatorAppTheme
-
 class MainActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         val viewModel:MainViewModel by viewModels()
         super.onCreate(savedInstanceState)
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxWidth()
                                 .padding(bottom = 20.dp)
                         )
-
+                        
                         //Height TextField
                         DetailTextField(
                             text = "Height (cm)",
@@ -82,7 +82,6 @@ class MainActivity : ComponentActivity() {
                                 color = Color.White
                             )
                         }
-
                         //BMI Result
                         Text(
                             text = "Your BMI is ${viewModel.bmi}",
