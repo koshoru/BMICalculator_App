@@ -24,11 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import com.example.bmicalculatorapp.ui.theme.BMICalculatorAppTheme
-
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("test", viewModel.text)
+        val viewModel:MainViewModel by viewModels()
         super.onCreate(savedInstanceState)
         setContent {
             BMICalculatorAppTheme {
@@ -37,66 +35,68 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    BMICalculatorApp()
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .padding(vertical = 20.dp, horizontal = 40.dp)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+
+                        //Title
+                        Text(
+                            text = "BMI Calculator App",
+                            textAlign = TextAlign.Center,
+                            fontSize = 35.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 20.dp)
+                        )
+                        
+                        //Height TextField
+                        DetailTextField(
+                            text = "Height (cm)",
+                            placeholder = "170",
+                            value = viewModel.height,
+                            onValueChange = { viewModel.height = it })
+
+                        //Weight TextField
+                        DetailTextField(
+                            text = "Weight (kg)",
+                            placeholder = "65",
+                            value = viewModel.weight,
+                            onValueChange = { viewModel.weight = it })
+
+                        //Calculate Button
+                        Button(
+                            onClick = { viewModel.calculateBMI() },
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFEE7676)),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 10.dp)
+                        ) {
+                            Text(
+                                text = "Calculate",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
+                        //BMI Result
+                        Text(
+                            text = "Your BMI is ${viewModel.bmi}",
+                            fontSize = 25.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Gray,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .padding(vertical = 10.dp)
+                                .fillMaxWidth()
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun BMICalculatorApp() {
-    Column(
-        horizontalAlignment = Alignment.Start,
-        modifier = Modifier
-            .padding(30.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
-
-        //Title
-        Text(
-            text = "BMI Calculator",
-            textAlign = TextAlign.Center,
-            fontSize = 35.sp,
-            fontWeight = FontWeight.ExtraBold,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        )
-
-        //Height TextField
-        DetailTextField(text = "Height (cm)", placeholder = "170", value = "", onValueChange = {})
-
-        //Weight TextField
-        DetailTextField(text = "Weight (kg)", placeholder = "65", value = "", onValueChange = {})
-
-        //Calculate Button
-        Button(
-            onClick = { /*TODO*/ },
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFEE6767)),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp)
-        ) {
-            Text(
-                text = "Calculate",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-        }
-
-        //BMI Result
-        Text(
-            text = "Your BMI is 00.0",
-            fontSize = 25.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.Gray,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(vertical = 10.dp)
-                .fillMaxWidth()
-        )
     }
 }
 
